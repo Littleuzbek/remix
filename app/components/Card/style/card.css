@@ -1,0 +1,395 @@
+.card {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: 0.5s;
+  border-radius: 10px;
+  text-decoration: none;
+  overflow: hidden;
+  color: black;
+}
+
+.card:hover {
+  box-shadow: 0 5px 15px rgb(158, 158, 158);
+}
+
+.image {
+  width: 100%;
+}
+
+.swiper-pagination-bullet-active {
+  background: white !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  user-select: none;
+  color: white !important;
+}
+
+.card:hover > .image {
+  scale: 1.1;
+  -webkit-user-drag: none;
+}
+
+.img-container{
+  position: relative;
+  widows: 100%;
+}
+
+.toWishes {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  z-index: 1;
+  top: 0.2rem;
+  right: 0.4rem;
+  cursor: pointer;
+}
+
+.toWishes > .icon {
+  width: 100%;
+  height: 100%;
+}
+
+.toWishes > .iconFull {
+  width: 100%;
+  height: 100%;
+  color: blueviolet;
+}
+
+.shortInfo {
+  height: 6.5rem;
+  padding: 0 5px;
+  /* background-color: red; */
+}
+
+.shortInfo > p {
+  width: 100%;
+  line-height: 1.4rem;
+  font-size: 1.1rem;
+  margin: 0 5px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+}
+
+.shortInfo > p:nth-of-type(1) {
+  padding: 2px 0 0 0;
+  margin: 0.5rem 0;
+}
+
+/* .shortInfo > p:nth-of-type(2) {
+  font-size: 0.9rem;
+} */
+
+.shortInfo > p:nth-of-type(2) {
+  width: fit-content !important;
+  font-size: 0.9rem;
+  background-color: yellow;
+  padding: 0 5px;
+  margin: 0;
+}
+
+.card > div:nth-last-child(1) {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.price {
+  margin: 5px;
+}
+
+.price > p:nth-child(1) {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.price > p:nth-child(2) {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.toCard {
+  width: 2.5rem;
+  height: 2.2rem;
+  padding: 2px;
+  margin: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.toCard > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.toCard:hover {
+  background-color: rgb(241, 240, 240);
+}
+
+/* related items */
+
+.relatedProducts {
+  width: 100%;
+  margin: 2rem 0;
+  overflow: auto;
+  display: flex;
+  gap: 1rem;
+  padding: 0 1rem 1rem 1rem;
+}
+
+.relatedProducts::-webkit-scrollbar {
+  display: none;
+}
+
+.relatedTitle {
+  margin: 2rem 0 0 1rem;
+}
+
+.scrollRight,
+.scrollLeft {
+  display: none;
+}
+
+.swiper-pagination-bullet-active {
+  background: white !important;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  user-select: none;
+  color: white !important;
+}
+
+/* skeleton styles */
+
+.skeleton_card {
+  width: 225px;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.skeleton_image,
+.info_block > p,
+.info_block:nth-of-type(2) > span {
+  background: var(--second-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton_image::after{
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background-color: var(--second-color);
+}
+
+.skeleton_card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent ,
+    white ,
+    transparent
+  );
+  animation: shimmer 1.5s infinite alternate;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton_image {
+  width: 100%;
+  height: 200px;
+  margin: 1rem auto;
+  display: block;
+  position: relative;
+}
+
+.info_block {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  margin: 0.5rem auto;
+}
+
+.info_block > p {
+  width: 90%;
+  height: 20px;
+}
+
+.info_block > p:nth-child(2) {
+  width: 70%;
+}
+
+.info_block:nth-of-type(2) {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info_block:nth-of-type(2) > p:nth-child(1) {
+  width: 50%;
+}
+
+.info_block:nth-of-type(2) > span {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+
+@media screen and (max-width: 992px) {
+  .title > h1 {
+    /* width: auto;
+    font-size: 1.5rem;
+    text-align: center; */
+    display: none;
+  }
+
+  .title > select {
+    display: block;
+  }
+
+  .title > select:focus {
+    outline: none;
+  }
+
+  .cardContainer > div {
+    gap: 1rem;
+    justify-content: space-evenly;
+  }
+
+  /* .card {
+    min-width: 5rem !important;
+    width: 9rem !important;
+    height: 17rem;
+  } */
+
+  .card:hover {
+    box-shadow: none;
+  }
+
+  /* .image  {
+    height: 20rem;
+  } */
+
+  .image > img {
+    max-height: fit-content !important;
+  }
+
+  .shortInfo {
+    height: 6.5rem;
+  }
+
+  .shortInfo > p {
+    line-height: 1.2rem;
+  }
+
+  .shortInfo > p:nth-child(1) {
+    font-size: 1rem !important;
+  }
+
+  .shortInfo > p:nth-child(3),
+  .shortInfo > p:nth-child(2) {
+    font-size: 0.8rem !important;
+  }
+
+  .price > p {
+    font-size: 0.8rem !important;
+  }
+
+  .price > p:nth-child(2) {
+    font-size: 1rem !important;
+  }
+
+  .toCard {
+    margin: 0;
+    max-width: 2rem !important;
+    border: 0.5px solid rgb(110, 110, 110);
+  }
+
+  .toCard:hover {
+    background-color: transparent;
+  }
+
+  /* related items */
+
+  .relatedProducts {
+    gap: 0.5rem;
+    padding: 0;
+    margin: 2rem 0 2rem 0.5rem;
+    position: relative;
+    scroll-behavior: smooth;
+  }
+
+  .relatedTitle {
+    font-size: 1.38rem;
+  }
+
+  .relatedCardMobile {
+    min-width: 9rem !important;
+  }
+  .scrollLeft {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    position: absolute;
+    z-index: 2;
+    left: 3%;
+    top: calc(40% - 20px);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .scrollRight {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    position: absolute;
+    z-index: 2;
+    right: 3%;
+    top: calc(40% - 20px);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .relatedProducts::-webkit-scrollbar {
+    display: block;
+  }
+
+  
+}

@@ -1,0 +1,58 @@
+.user-page {
+  width: 90%;
+  margin: 1rem auto;
+}
+
+.username {
+  display: grid;
+  place-items: center;
+}
+
+.username > img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.user-dashboard {
+  display: grid;
+  grid-template-columns: 20% 79%;
+  gap: 1%;
+  margin: 2rem 0 0 0;
+}
+
+.user-dashboard-navbar{
+  position: sticky;
+  top: 1rem;
+}
+
+.order-history-container,
+.user-information,
+.user-dashboard-navbar {
+  height: fit-content;
+  padding: 1rem;
+  border: 3px solid var(--first-color);
+  border-radius: 20px;
+}
+
+.order-history-container{
+  padding: 0 0 1rem;
+  overflow: hidden;
+}
+
+.user-settings {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.user-settings > .product-info {
+  width: 20rem;
+}
+
+.user-settings > .product-info:nth-last-child(2) > p {
+  top: 0;
+}
+
+.user-settings > .product-info:nth-last-child(2) {
+  margin: 1.5rem 5%;
+}

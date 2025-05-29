@@ -1,0 +1,29 @@
+.home-page {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.home-page > h2 {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.banner {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.top-seller,
+.collection {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  padding: 0 0 1rem;
+}
+
+.noItem-image{
+  width: 100%;
+  height: 30rem;
+  object-fit: contain;
+}

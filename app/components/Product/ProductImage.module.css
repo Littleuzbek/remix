@@ -1,0 +1,29 @@
+.imageDetails {
+  width: 35rem;
+  height: fit-content;
+  max-height: 30rem;
+  display: flex;
+  position: sticky;
+  top: 10px;
+}
+
+.pp{
+  position: absolute;
+  background-color: red;
+  right: .5rem;
+  top: .5rem;
+  z-index: 1;
+}
+
+@media screen and (max-width: 959px) {
+  .imageDetails{
+    width: 100%;
+    max-height: fit-content !important;
+    position: static;
+    margin: 0 0 .5rem !important;
+  }
+
+  .imageDetails > div{
+    padding: 0;
+  }
+}

@@ -1,0 +1,6 @@
+.details  {
+    list-style-position: inside ;
+    list-style-type: disc ;
+    /* font-size: .9rem; */
+    margin: .5rem 0 0 0;
+}

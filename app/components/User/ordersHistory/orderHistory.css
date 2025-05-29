@@ -1,0 +1,145 @@
+.order-container {
+  border: 3px solid var(--first-color);
+  border-radius: 10px;
+  background-color: var(--second-color);
+  margin: 0 1rem 2rem;
+}
+
+.order-container:nth-last-child(1) {
+  margin: 0 1rem 0;
+}
+
+.order {
+  display: grid;
+  grid-template-columns: 45% 50%;
+  gap: 5%;
+  padding: 1rem;
+}
+
+.order:nth-child(1) {
+  padding: 2rem !important;
+}
+
+/* .order-id {
+  text-align: center;
+  padding: 1rem 0 1rem;
+  border-bottom: 3px solid var(--first-color);
+} */
+
+.order > img {
+  width: 100%;
+  object-fit: contain;
+  aspect-ratio: 1 / 1;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.what-item > div > span,
+.order-info > span {
+  display: flex;
+  gap: 1rem;
+  font-size: var(--bg-font-all);
+  align-items: center;
+}
+
+.order-condition-good {
+  color: var(--success-color);
+}
+
+.order-condition-bad {
+  color: red;
+}
+
+.order-condition-active {
+  color: rgb(255, 166, 0);
+}
+
+.what-item > div > span > p,
+.order-info > span > p {
+  background-color: var(--first-color);
+  color: white;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.order-what {
+  width: 100%;
+  padding: 1rem 1rem;
+  border-top: 3px solid var(--first-color);
+  font-size: var(--bg-font-all);
+}
+
+.what-amount {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.what-amount > svg {
+  transition: 0.4s;
+}
+
+.what-item {
+  display: grid;
+  grid-template-columns: 20% auto;
+  gap: 2%;
+  padding: 1.5rem 0;
+  animation: comeout 0.5s linear;
+  user-select: none;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.2);
+}
+
+.what-item:nth-last-child(1) {
+  border-bottom: none;
+}
+
+.what-item > img {
+  width: 100%;
+}
+
+.what-item > div {
+  display: grid;
+  gap: 1rem;
+}
+
+.order-category{
+  margin: 0 0 1rem;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.order-category > h3{
+  text-align: center;
+  padding: 1rem 0;
+  border-bottom: 3px solid var(--first-color);
+  cursor: pointer;
+}
+
+.order-category > h3:nth-child(1){
+  border-radius: 0 0 10px 0;
+}
+
+.order-category > h3:nth-child(2){
+  border-radius: 0 0 0 10px;
+}
+
+.order-active-category{
+  background-color: var(--first-color);
+  color: white;
+}
+
+@keyframes comeout {
+  from {
+    margin: -2rem 0 0 0;
+    opacity: 0;
+  }
+  to {
+    margin: 1rem 0;
+    opacity: 1;
+  }
+}
