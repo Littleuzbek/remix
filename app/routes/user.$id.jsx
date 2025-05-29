@@ -4,7 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import User from "../components/User/User";
 
 export const loader = async ({ params }) => {
-  const userId = params.id;
+  const userId = decodeURIComponent(params.id);
   const userDoc = (await getDoc(doc(db, "exko", "data", "users", userId))).data();
 
   const userData = {

@@ -4,10 +4,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
-import { useDispatch } from "react-redux";
 import {
   collection,
   // doc,
@@ -15,16 +13,11 @@ import {
   getDocs,
   // onSnapshot,
 } from "firebase/firestore";
-import { useEffect } from "react";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { db } from "./firebase";
-import { cartAction } from "./store/CartSlice";
 
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import ScrollUp from "./components/extra/ScrollUp"
-import CartBtn from "./components/Cart/CartBtn"
+import AppShell from "./AppShell"
 
 import rootStyles from "./index.css?url";
 import responsiveStyles from "./responsive.css?url";
@@ -110,19 +103,19 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: loginStyles
+    href: loginStyles,
   },
   {
     rel: "stylesheet",
-    href: userStyles
+    href: userStyles,
   },
   {
     rel: "stylesheet",
-    href: userDashboardStyles
+    href: userDashboardStyles,
   },
   {
     rel: "stylesheet",
-    href: orderHistoryStyles
+    href: orderHistoryStyles,
   },
 ];
 
@@ -155,27 +148,6 @@ export const loader = async () => {
   }
 };
 
-function AppShell({ children }: { children: React.ReactNode }) {
-  const dispatch = useDispatch();
-  const products = useLoaderData<Product[]>();
-
-  useEffect(()=>{
-    dispatch(cartAction.setProducts(products))
-  },[products])
-
-  return (
-    <div className="exko">
-      <Header />
-      {children}
-      <Footer />
-      <ScrollRestoration />
-      <Scripts />
-      <ScrollUp />
-      <CartBtn />
-    </div>
-  );
-}
-
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -188,6 +160,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <Provider store={store}>
           <AppShell>{children}</AppShell>
+          <ScrollRestoration />
+          <Scripts />
         </Provider>
       </body>
     </html>

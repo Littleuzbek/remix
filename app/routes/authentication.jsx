@@ -27,8 +27,8 @@ export const action = async ({ request }) => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
 
-    // const encodedURL = encodeURIComponent(res.user.uid)
-    return redirect(`/user/${res.user.uid}`);
+    const encodedURL = encodeURIComponent(res.user.uid)
+    return redirect(`/user/${encodedURL}`);
   } catch (err) {
     console.log("login error", err);
     return json({ error: "Wrong email or password!" }, { status: 401 });

@@ -30,44 +30,37 @@ export const action = async ({ request }) => {
       quantity: item.quantity,
     }));
 
-    console.log(auth.currentUser.uid);
-    // const orderRef = await addDoc(
-    //   collection(db, "exko", "data", "users", auth.currentUser.uid, "orders"),
-    //   {
-    //     orderAdress: location,
-    //     orderCondition: null,
-    //     orderDate: serverTimestamp(),
-    //     orderDeliveryDate: null,
-    //     orderId: "123",
-    //     orderOwner: { ...user, uid: auth.currentUser.uid },
-    //     orderTotalPrice: totalDiscount,
-    //     nasiyaCondition: null,
-    //     nasiya: {
-    //       payment1: {
-    //         date: serverTimestamp(),
-    //         condition: true,
-    //         sum: Math.round(totalDiscount / 3),
-    //       },
-    //       payment2: {
-    //         date: serverTimestamp(),
-    //         condition: false,
-    //         sum: Math.round(totalDiscount / 3),
-    //       },
-    //       payment3: {
-    //         date: serverTimestamp(),
-    //         condition: false,
-    //         sum: Math.round(totalDiscount / 3),
-    //       },
-    //     },
-    //     orderItems: sortedCartItems,
-    //   }
-    // );
-
-    // console.log(orderRef.id);
-
-    // const orderDoc = await getDoc(
-    //   doc(db, "exko", "data", "users", auth.currentUser.uid, "orders", orderRef.id)
-    // );
+    const orderRef = await addDoc(
+      collection(db, "exko", "data", "users", auth.currentUser.uid, "orders"),
+      {
+        orderAdress: location,
+        orderCondition: null,
+        orderDate: serverTimestamp(),
+        orderDeliveryDate: null,
+        orderId: "123",
+        orderOwner: { ...user, uid: auth.currentUser.uid },
+        orderTotalPrice: totalDiscount,
+        nasiyaCondition: null,
+        nasiya: {
+          payment1: {
+            date: serverTimestamp(),
+            condition: true,
+            sum: Math.round(totalDiscount / 3),
+          },
+          payment2: {
+            date: serverTimestamp(),
+            condition: false,
+            sum: Math.round(totalDiscount / 3),
+          },
+          payment3: {
+            date: serverTimestamp(),
+            condition: false,
+            sum: Math.round(totalDiscount / 3),
+          },
+        },
+        orderItems: sortedCartItems,
+      }
+    );
 
     // const getDate = (unformatted, offset = 0) => {
     //   const date = new Date(unformatted?.nasiya?.payment1?.date.toDate());
@@ -77,29 +70,12 @@ export const action = async ({ request }) => {
     //   })}`;
     // };
 
-    // await updateDoc(
-    //   doc(db, "exko", "data", "users", auth.currentUser.uid, "orders", orderRef.id),
-    //   {
-    //     nasiya: {
-    //       payment1: {
-    //         condition: true,
-    //         date: getDate(orderDoc.data(), 0),
-    //         sum: orderDoc.data()?.nasiya?.payment1?.sum,
-    //       },
-    //       payment2: {
-    //         condition: false,
-    //         date: getDate(orderDoc.data(), 1),
-    //         sum: orderDoc.data()?.nasiya?.payment2?.sum,
-    //       },
-    //       payment3: {
-    //         condition: false,
-    //         date: getDate(orderDoc.data(), 2),
-    //         sum: orderDoc.data()?.nasiya?.payment3?.sum,
-    //       },
-    //     },
-    //     orderId: orderRef.id,
-    //   }
-    // );
+    await updateDoc(
+      doc(db, "exko", "data", "users", auth.currentUser.uid, "orders", orderRef.id),
+      {
+        orderId: orderRef.id,
+      }
+    );
 
     return redirect("/");
   } catch (err) {

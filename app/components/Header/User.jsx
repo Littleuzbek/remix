@@ -8,19 +8,19 @@ export default function User() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  // const handleNavigation = () => {
-  //   if(user?.isAdmin){
-  //     navigate("/taxtxona")
-  //   }
+  const handleNavigation = () => {
+    if(user?.isAdmin){
+      navigate("/taxtxona")
+    }
 
-  //   if(user?.isAdmin === false){
-  //     navigate("/user")
-  //   }
+    if(user?.isAdmin === false){
+      navigate("/user")
+    }
 
-  //   if(!user){
-  //     navigate("/authentication")
-  //   }
-  // }
+    if(!user){
+      navigate("/authentication")
+    }
+  }
 
   return (
     <Link

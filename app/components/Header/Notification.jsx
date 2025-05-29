@@ -10,7 +10,7 @@ export default function Notification() {
   const [notific, setNotific] = useState(false);
   const cart = useSelector((state) => state.cart.cart);
   const newItem = useSelector((state) => state.cart.notificationItem);
-  const ref = useRef();
+  const ref = useRef(null);
   const {pathname} = useLocation()
  
   useEffect(() => {
