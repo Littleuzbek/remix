@@ -44,8 +44,8 @@ export default function Notification() {
               </div>
               <div>
                 <p>{newItem?.name}</p>
-                <Link to={"/cart"} className="go-cartBtn">{translateText().goCart}</Link>
-                <Link to={"/cart"} className="mobile-go-cartBtn"><MdOutlineShoppingCart /></Link> 
+                <Link to="/cart" className="go-cartBtn">{translateText().goCart}</Link>
+                <Link to="/cart" className="mobile-go-cartBtn"><MdOutlineShoppingCart /></Link> 
               </div>
             </div>
           </div>

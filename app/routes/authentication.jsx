@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import Login from "../components/Login/Log";
-import SignUp from "../components/Login/SingUp";
+// import SignUp from "../components/Login/SingUp";
 import { useActionData } from "@remix-run/react";
 
 export const loader = async () => {
@@ -40,8 +40,8 @@ export default function Authentication() {
   const userData = useActionData();
   return (
     <div className="login-page">
-      {form ? <SignUp /> : <Login data={userData} />}
-
+      {/* {form ? <SignUp /> : <Login data={userData} />} */}
+      <Login data={userData} />
       <div className="change-form">
         {form ? "Not Newcomer" : "Newcomer"} ?
         <button onClick={() => setForm(!form)}>
