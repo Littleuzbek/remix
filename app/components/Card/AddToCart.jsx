@@ -1,4 +1,4 @@
-import "./style/Card.css";
+import "./style/card.css";
 import { useDispatch } from "react-redux";
 import { cartAction } from "../../store/CartSlice";
 
