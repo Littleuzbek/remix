@@ -1,4 +1,4 @@
-import "./style/Card.css";
+import "./style/card.css";
 
 export default function Skeleton({ src, onLoading }) {
   const isString = (value) => typeof value === "string";

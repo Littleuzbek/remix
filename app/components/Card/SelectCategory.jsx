@@ -1,5 +1,5 @@
 // import { usePathname, useRouter } from "next/navigation";
-import "./style/Card.css";
+import "./style/card.css";
 
 export default function SelectCategory({ title }) {
   const router = useRouter();
