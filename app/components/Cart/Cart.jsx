@@ -74,7 +74,7 @@ export default function Cart() {
         </div>
       )}
 
-      {cart?.length === 0 ? (
+      {a?.length === 0 ? (
         <ItemsNone />
       ) : (
         <div className="cart-page">
@@ -87,7 +87,7 @@ export default function Cart() {
               <div className="item-indicator">
                 <h3>{translateText().allProduct}</h3>
               </div>
-              {cart.map((item) => (
+              {a.map((item) => (
                 <Item product={item} key={item.cartItemId} />
               ))}
             </div>
@@ -102,7 +102,7 @@ export default function Cart() {
               <input
                 type="hidden"
                 name="cart"
-                value={JSON.stringify(cart)}
+                value={JSON.stringify(a)}
               />
               <input
                 type="hidden"

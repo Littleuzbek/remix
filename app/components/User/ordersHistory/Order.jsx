@@ -23,6 +23,7 @@ export default function Order({ order }) {
 
     return `${date}  ${time}`;
   };
+  
   return (
     <div className="order-container">
       {/* <h2 className="order-id">Buyurtma ID-{order?.orderId}</h2> */}

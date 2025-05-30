@@ -26,43 +26,43 @@ export default function Header() {
             pathname?.includes("/electronics") ? "active-category" : ""
           }
         >
-          <Link to={"/category/electronics"}>Elektronika</Link>
+          <Link prefetch="intent" to={"/category/electronics"}>Elektronika</Link>
         </li>
         <li className={pathname?.includes("/books") ? "active-category" : ""}>
-          <Link to={"/category/books"}>Kitoblar</Link>
+          <Link prefetch="intent" to={"/category/books"}>Kitoblar</Link>
         </li>
         <li className={pathname?.includes("/clothes") ? "active-category" : ""}>
-          <Link to={"/category/clothes"}>Kiyimlar</Link>
+          <Link prefetch="intent" to={"/category/clothes"}>Kiyimlar</Link>
         </li>
         <li className={pathname?.includes("/shoes") ? "active-category" : ""}>
-          <Link to={"/category/shoes"}>Poyafzal</Link>
+          <Link prefetch="intent" to={"/category/shoes"}>Poyafzal</Link>
         </li>
         <li
           className={
             pathname?.includes("/accessuaries") ? "active-category" : ""
           }
         >
-          <Link to={"/category/accessuaries"}>Aksessuarlar</Link>
+          <Link prefetch="intent" to={"/category/accessuaries"}>Aksessuarlar</Link>
         </li>
         <li
           className={pathname?.includes("/cosmetics") ? "active-category" : ""}
         >
-          <Link to={"/category/cosmetics"}>Kosmetika</Link>
+          <Link prefetch="intent" to={"/category/cosmetics"}>Kosmetika</Link>
         </li>
         <li className={pathname?.includes("/health") ? "active-category" : ""}>
-          <Link to={"/category/health"}>Salomatlik</Link>
+          <Link prefetch="intent" to={"/category/health"}>Salomatlik</Link>
         </li>
         <li className={pathname?.includes("/laptops") ? "active-category" : ""}>
-          <Link to={"/category/laptops"}>Kompyuterlar</Link>
+          <Link prefetch="intent" to={"/category/laptops"}>Kompyuterlar</Link>
         </li>
         <li className={pathname?.includes("/toys") ? "active-category" : ""}>
-          <Link to={"/category/toys"}>O'yinchoqlar</Link>
+          <Link prefetch="intent" to={"/category/toys"}>O'yinchoqlar</Link>
         </li>
         <li className={pathname?.includes("/watches") ? "active-category" : ""}>
-          <Link to={"/category/watches"}>Saotlar</Link>
+          <Link prefetch="intent" to={"/category/watches"}>Saotlar</Link>
         </li>
         <li className={pathname?.includes("/bu ") ? "active-category" : ""}>
-          <Link to={"/category/bu"}>B/U</Link>
+          <Link prefetch="intent" to={"/category/bu"}>B/U</Link>
         </li>
       </ul>
 

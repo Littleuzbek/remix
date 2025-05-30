@@ -1,30 +1,9 @@
 import "./orderHistory.css";
 import Order from "./Order";
-import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
-import { auth, db } from "../../../firebase";
+import { useState } from "react";
 
-export default function OrderHistory() {
-  const [orders, setOrders] = useState([]);
+export default function OrderHistory({orders}) {
   const [category, setCategory] = useState(false);
-  const user = auth?.currentUser;
-
-  useEffect(() => {
-    const getData = onSnapshot(
-      collection(db, "exko", "data", "users", user?.uid, "orders"),
-      (query) => {
-        const allOrders = [];
-
-        query?.forEach((item) => allOrders.push(item.data()));
-
-        if (allOrders) {
-          setOrders(allOrders);
-        }
-      }
-    );
-
-    return () => getData();
-  }, []);
 
   return (
     <div className="order-history-container">
@@ -42,7 +21,7 @@ export default function OrderHistory() {
           Barchasi
         </h3>
       </div>
-      {orders.length !== 0 ? (
+      {orders?.length !== 0 ? (
         orders
           ?.sort((a, b) => b?.orderDate - a?.orderDate)
           ?.map((item) =>

@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "@remix-run/react";
+import { useLocation, useNavigate } from "@remix-run/react";
 import { useSelector } from "react-redux";
 import { LuUserRound } from "react-icons/lu";
 
@@ -9,31 +9,32 @@ export default function User() {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
-    if(user?.isAdmin){
-      navigate("/taxtxona")
+    if (user?.isAdmin) {
+      navigate("/taxtxona");
     }
 
-    if(user?.isAdmin === false){
-      navigate("/user")
+    if (user?.isAdmin === false) {
+      navigate("/user");
     }
 
-    if(!user){
-      navigate("/authentication")
+    if (!user) {
+      navigate("/authentication");
     }
-  }
+  };
 
   return (
-    <Link
+    <div
+      role="button"
       className="navbar-user"
       style={
         pathname?.includes("/authentication")
           ? { backgroundColor: "var(--first-color)", color: "white" }
           : {}
       }
-      to="/authentication"
+      onClick={()=>handleNavigation()}
     >
       <LuUserRound />
       {isLogged && user?.name ? user?.name : "Kirish"}
-    </Link>
+    </div>
   );
 }

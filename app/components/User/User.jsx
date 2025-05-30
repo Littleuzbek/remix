@@ -1,12 +1,11 @@
 import "./user.css";
-import { useState } from "react";
 
 import avatar1 from "../../assets/avatar/avatar1.png";
-import UserInformation from "./userInfo/UserInformation";
-import OrderHistory from "./ordersHistory/OrderHistory";
+import { Outlet, useLocation, useNavigate } from "@remix-run/react";
 
-export default function User({user}) {
-  const [section, setSection] = useState("user-info");
+export default function User({ user }) {
+  const {pathname} = useLocation();
+  const navigate = useNavigate();
   return (
     <div className="user-page">
       <div className="username">
@@ -18,20 +17,9 @@ export default function User({user}) {
         <div className="user-dashboard-navbar">
           <span
             className="nav-item"
-            onClick={() => setSection("user-info")}
+            onClick={() => {navigate(`/user/${user.uid}/orders`)}}
             style={
-              section === "user-info"
-                ? { backgroundColor: "var(--first-color)", color: "white" }
-                : {}
-            }
-          >
-            Ma'lumotlarim
-          </span>
-          <span
-            className="nav-item"
-            onClick={() => setSection("order-history")}
-            style={
-              section === "order-history"
+              pathname.includes("orders")
                 ? { backgroundColor: "var(--first-color)", color: "white" }
                 : {}
             }
@@ -40,9 +28,20 @@ export default function User({user}) {
           </span>
           <span
             className="nav-item"
+            onClick={() => {navigate(`/user/${user.uid}/main`)}}
+            style={
+              pathname.includes("main")
+                ? { backgroundColor: "var(--first-color)", color: "white" }
+                : {}
+            }
+          >
+            Ma'lumotlarim
+          </span>
+          <span
+            className="nav-item"
             // onClick={() => setSection("nasiya")}
             style={
-              section === "nasiya"
+              pathname.includes("support")
                 ? { backgroundColor: "var(--first-color)", color: "white" }
                 : {}
             }
@@ -51,8 +50,7 @@ export default function User({user}) {
           </span>
         </div>
 
-        {section === "user-info" && <UserInformation />}
-        {section === "order-history" && <OrderHistory />}
+        <Outlet />
       </div>
     </div>
   );

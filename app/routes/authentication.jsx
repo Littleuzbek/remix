@@ -1,37 +1,29 @@
 import { useState } from "react";
-import { json, redirect } from "@remix-run/node";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../firebase";
-import Login from "../components/Login/Log";
-// import SignUp from "../components/Login/SingUp";
+import { redirect } from "@remix-run/node";
+import { isLogged, login } from "../firebase";
+import Login from "../components/Auth/Log";
+// import SignUp from "../components/Auth/SingUp";
 import { useActionData } from "@remix-run/react";
 
 export const loader = async () => {
-  if (!auth?.currentUser?.email) {
-    return null;
+  const isUserLogged = await isLogged(); 
+  if(isUserLogged){
+    const uid = isUserLogged?.uid || isUserLogged?.currentUser.uid
+    return redirect(`/user/${uid}/main`);
+  }else{
+    return null
   }
-  return redirect(`/user/${auth.currentUser.uid}`);
 };
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
 
-  const email = formData.get("email");
-  const password = formData.get("password");
+  const res = login(formData);
 
-  if (email.trim() === "" || password.trim() === "") {
-    return json({ error: "Please fill out the form" }, { status: 400 });
-  }
-
-  try {
-    const res = await signInWithEmailAndPassword(auth, email, password);
-
-    const encodedURL = encodeURIComponent(res.user.uid)
-    return redirect(`/user/${encodedURL}`);
-  } catch (err) {
-    console.log("login error", err);
-    return json({ error: "Wrong email or password!" }, { status: 401 });
+  if(res){
+    return redirect(`/user/${res.user.uid}/main`);
+  }else{
+    throw new Response("Wrong email or password!",{ status: 401})
   }
 };
 

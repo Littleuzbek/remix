@@ -1,7 +1,8 @@
 import { DatePicker } from "./DatePicker";
 import { GenderSelection } from "./GenderSelect";
+import { Form } from "@remix-run/react";
 
-export default function UserInformation() {
+export default function UserInformation({data, orders}) {
   return (
     <div className="user-information">
       <h2>Ma'lumotlarim</h2>
@@ -12,7 +13,7 @@ export default function UserInformation() {
           <input
             type="text"
             required
-            // ref={email}
+            defaultValue={data?.name} 
           />
         </div>
         <div className="product-info">
@@ -20,7 +21,7 @@ export default function UserInformation() {
           <input
             type="text"
             required
-            // ref={email}
+            defaultValue={data?.surname} 
           />
         </div>
         <div className="product-info">
@@ -28,7 +29,7 @@ export default function UserInformation() {
           <input
             type="text"
             required
-            // ref={email}
+            defaultValue={data?.number} 
           />
         </div>
         <div className="product-info">
@@ -36,7 +37,7 @@ export default function UserInformation() {
           <input
             type="text"
             required
-            // ref={email}
+            defaultValue={data?.email} 
           />
         </div>
         <div className="product-info">

@@ -6,16 +6,9 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
-import {
-  collection,
-  // doc,
-  // getDoc,
-  getDocs,
-  // onSnapshot,
-} from "firebase/firestore";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import { db } from "./firebase";
+import { getProducts, isLogged } from "./firebase";
 
 import AppShell from "./AppShell"
 
@@ -26,7 +19,7 @@ import headerStyles from "./components/Header/style/header.css?url";
 import footerStyles from "./components/Footer/footer.css?url";
 import cartStyles from "./components/Cart/cart.css?url";
 import viewerStyles from "./components/Viewer/viewer.css?url";
-import loginStyles from "./components/Login/log.css?url";
+import loginStyles from "./components/Auth/log.css?url";
 import userStyles from "./components/User/user.css?url";
 import userDashboardStyles from "./components/User/dashboard.css?url";
 import orderHistoryStyles from "./components/User/ordersHistory/orderHistory.css?url";
@@ -119,33 +112,11 @@ export const links: LinksFunction = () => [
   },
 ];
 
-type Product = {
-  discount?: number;
-  feedback?: number;
-  id?: string;
-  image?: string | string[];
-  name?: string;
-  options?: {
-    color?: string | null;
-    size?: string | null;
-  };
-  price?: number;
-  proType?: string;
-  rating?: number;
-  specs?: string | null;
-};
-
 export const loader = async () => {
-  const products: Product[] = [];
-  const snapshot = getDocs(collection(db, "exko", "data", "items"));
-
-  (await snapshot).forEach((doc) => {
-    products.push(doc.data() as Product);
-  });
-
-  if (products) {
-    return products;
-  }
+  const products = await getProducts();
+  await isLogged()
+  
+  return products;
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {

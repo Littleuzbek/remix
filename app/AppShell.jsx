@@ -15,7 +15,7 @@ export default function AppShell({children}) {
   useEffect(() => {
     dispatch(cartAction.setProducts(products));
   }, [products]);
-
+  
   return (
     <div className="exko">
       <Header />
