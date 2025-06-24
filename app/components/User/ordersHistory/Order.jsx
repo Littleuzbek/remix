@@ -1,15 +1,17 @@
+import "../dashboard.css";
 import { useState } from "react";
 import OrderItem from "./OrderItem";
 import Carousel from "../../Card/Carousel";
-import PaymentPeriod from "./PaymentPeriod";
+import { PriceFormatter } from "../../extra/PriceFormatter";
 import { FaArrowDown } from "react-icons/fa6";
+import NasiyaIndicators from "./NasiyaIndicators";
 
-export default function Order({ order }) {
+export default function Order({ order, onCancel }) {
   const [showItem, setShowItem] = useState(false);
   const [showNasiya, setShowNasiya] = useState(false);
 
   const formatDate = (unformatted) => {
-    const formattedDate = new Date(unformatted?.toDate());
+    const formattedDate = new Date(unformatted.seconds * 1000);
     const date =
       formattedDate.getDate() +
       "-" +
@@ -23,7 +25,7 @@ export default function Order({ order }) {
 
     return `${date}  ${time}`;
   };
-  
+
   return (
     <div className="order-container">
       {/* <h2 className="order-id">Buyurtma ID-{order?.orderId}</h2> */}
@@ -37,37 +39,47 @@ export default function Order({ order }) {
         />
         <div className="order-info">
           <span
-            className={
-              order?.orderCondition
-                ? "order-condition-good"
-                : order?.orderCondition !== null
-                ? "order-condition-bad"
-                : "order-condition-active"
-            }
+            className={`
+              ${order?.confirmed === null && "order-condition-active"}
+              ${order?.confirmed === false && "order-condition-bad"}
+              ${order?.orderCondition === true && "order-condition-good"}
+              ${order?.orderCondition === false && "order-condition-bad"}
+              ${
+                order?.confirmed === null ||
+                (order?.confirmed === true &&
+                  order?.orderCondition === null &&
+                  "order-condition-active")
+              }
+              `}
           >
-            <p>Holat:</p>{" "}
-            {order?.orderCondition
-              ? "Xaridor qabul qilgan"
-              : order?.orderCondition !== null
-              ? "Rad etilgan"
-              : "Jarayonda"}
+            <p>Holat:</p>
+            {order?.confirmed === null && "Tasdiqlamagan"}
+            {order?.confirmed === false && "EXKO tomonidan rad etilgan"}
+            {order?.orderCondition === true && "Xaridor qabul qilgan"}
+            {order?.orderCondition === false && "Rad etilgan"}
+            {order?.confirmed === null ||
+              (order?.confirmed === true &&
+                order?.orderCondition === null &&
+                "Jarayonda")}
           </span>
-          <span
-            className={
-              order?.orderCondition
-                ? "order-condition-good"
+          {order?.confirmed !== false && order?.orderCondition !== false && (
+            <span
+              className={
+                order?.orderCondition
+                  ? "order-condition-good"
+                  : order?.orderCondition !== null
+                  ? "order-condition-bad"
+                  : "order-condition-active"
+              }
+            >
+              <p>Yetkazib berish sanasi:</p>{" "}
+              {order?.orderCondition
+                ? order?.orderDeliveryDate
                 : order?.orderCondition !== null
-                ? "order-condition-bad"
-                : "order-condition-active"
-            }
-          >
-            <p>Yetkazib berish sanasi:</p>{" "}
-            {order?.orderCondition
-              ? order?.orderDeliveryDate
-              : order?.orderCondition !== null
-              ? "Rad etilgan"
-              : "Jarayonda"}
-          </span>
+                ? "Rad etilgan"
+                : "Jarayonda"}
+            </span>
+          )}
           <span>
             <p>Yetkazib berish manzili:</p> {order?.orderAdress}
           </span>
@@ -75,72 +87,23 @@ export default function Order({ order }) {
             <p>Buyurtma sanasi:</p> {formatDate(order?.orderDate)}
           </span>
           <span>
-            <p>Buyurtma qiymati:</p>{" "}
-            {order?.orderTotalPrice
-              ?.toLocaleString("en-US", { minimumFractionDigits: 2 })
-              .split(".")[0]
-              .replaceAll(",", " ")}{" "}
+            <p>Buyurtma qiymati:</p> {PriceFormatter(order?.orderTotalPrice)}{" "}
             so'm
           </span>
-          <span
-            className={
-              order?.nasiyaCondition
-                ? "order-condition-good"
-                : order?.nasiyaCondition !== null
-                ? "order-condition-bad"
-                : "order-condition-active"
-            }
-          >
-            <p>Nasiya:</p>{" "}
-            {order?.nasiyaCondition
-              ? "To'liq to'langan"
-              : order?.nasiyaCondition !== null
-              ? "Rad etilgan"
-              : "Keyingi to'lov sanasi"}{" "}
-            <FaArrowDown
-              onClick={() => {
-                order?.nasiyaCondition === false || setShowNasiya(!showNasiya);
-              }}
-              style={
-                showNasiya
-                  ? { rotate: "180deg", cursor: "pointer", transition: ".3s" }
-                  : { cursor: "pointer", transition: ".3s" }
-              }
-            />
-          </span>
-          {showNasiya && (
-            <span className="payment-period">
-              <PaymentPeriod
-                nasiya={{
-                  payment1: { ...order.nasiya.payment1 },
-                  payment2: { ...order.nasiya.payment2 },
-                  payment3: { ...order.nasiya.payment3 },
-                }}
-              />
-            </span>
+
+          <NasiyaIndicators order={order} />
+
+          {/* Buyurtmani rad etish start */}
+
+          {order?.confirmed === null && (
+            <div className="user-order-cancel-btn">
+              Buyurtmani bekor qilish
+              <button
+                onClick={() => onCancel(order?.nasiya ? true : false)}
+              ></button>
+            </div>
           )}
-          {showNasiya && order?.nasiya?.payment4 && (
-            <span className="payment-period">
-              <PaymentPeriod
-                nasiya={{
-                  payment1: { ...order.nasiya.payment1 },
-                  payment2: { ...order.nasiya.payment2 },
-                  payment3: { ...order.nasiya.payment3 },
-                }}
-              />
-            </span>
-          )}
-          {showNasiya && order?.nasiya?.payment7 && (
-            <span className="payment-period">
-              <PaymentPeriod
-                nasiya={{
-                  payment1: { ...order.nasiya.payment1 },
-                  payment2: { ...order.nasiya.payment2 },
-                  payment3: { ...order.nasiya.payment3 },
-                }}
-              />
-            </span>
-          )}
+          {/* Buyurtmani rad etish end */}
         </div>
       </div>
       <div className="order-what">

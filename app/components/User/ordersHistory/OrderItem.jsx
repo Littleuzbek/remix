@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from "@remix-run/react";
+import {PriceFormatter} from "../../extra/PriceFormatter"
 import Carousel from "../../Card/Carousel";
 
 export default function OrderItem({ orderItem }) {
@@ -21,18 +22,12 @@ export default function OrderItem({ orderItem }) {
         </span>
         <span>
           <p>Narxi:</p>{" "}
-          {orderItem?.price
-            ?.toLocaleString("en-US", { minimumFractionDigits: 2 })
-            .split(".")[0]
-            .replaceAll(",", " ")}{" "}
+          {PriceFormatter(orderItem?.price)}{" "}
           so'm
         </span>
         <span style={orderItem?.quantity === 1 ? {display: "none"} : {}}>
           <p>Umumiy narxi:</p>{" "}
-          {orderItem?.totalPrice
-            ?.toLocaleString("en-US", { minimumFractionDigits: 2 })
-            .split(".")[0]
-            .replaceAll(",", " ")}{" "}
+          {PriceFormatter(orderItem?.totalPrice)}{" "}
           so'm
         </span>
       </div>

@@ -9,18 +9,13 @@ export default function User() {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
-    if (user?.isAdmin) {
-      navigate("/taxtxona");
-    }
-
-    if (user?.isAdmin === false) {
-      navigate("/user");
-    }
-
-    if (!user) {
+    if (user) {
+      navigate(`/user/main`);
+    }else{
       navigate("/authentication");
     }
   };
+
 
   return (
     <div

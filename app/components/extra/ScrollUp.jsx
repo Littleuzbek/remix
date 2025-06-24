@@ -9,7 +9,7 @@ const Scrollup = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollUp = document.querySelector(".scrollup");
-      if (!scrollUp) return; // Guard clause in case element doesn't exist
+      if (!scrollUp) return; 
       
       if (window.scrollY >= 560) {
         if (pathname?.includes("/cart")) {

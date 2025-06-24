@@ -1,9 +1,37 @@
 import "./orderHistory.css";
-import Order from "./Order";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot } from "firebase/firestore";
+import { auth, db } from "../../../firebase";
+import OrderShell from "./OrderShell";
 
-export default function OrderHistory({orders}) {
+export default function OrderHistory() {
+  const [orders, setOrders] = useState(false);
   const [category, setCategory] = useState(false);
+  const user = auth?.currentUser?.uid;
+
+  useEffect(() => {
+    if (user) {
+      const getData = onSnapshot(
+        collection(db, "exko", "users", "users", user, "orders"),
+        (query) => {
+          const allOrders = [];
+
+          query?.forEach((item) => allOrders.push(item.data()));
+
+          if (allOrders?.length !== 0) {
+            setOrders(allOrders);
+            console.log(allOrders);
+          }
+
+          if(allOrders?.length === 0){
+            setOrders(0)
+          }
+        }
+      );
+
+      return () => getData();
+    }
+  }, [user]);
 
   return (
     <div className="order-history-container">
@@ -21,21 +49,21 @@ export default function OrderHistory({orders}) {
           Barchasi
         </h3>
       </div>
-      {orders?.length !== 0 ? (
+      {orders ? (
         orders
-          ?.sort((a, b) => b?.orderDate - a?.orderDate)
+          ?.sort((a, b) => b?.orderDate?.seconds - a?.orderDate?.seconds)
           ?.map((item) =>
             category ? (
-              <Order order={item} key={item?.orderId} />
+              <OrderShell order={item} key={item?.orderId} />
             ) : (
-              (item?.orderCondition === null ||
+              ((item?.confirmed === null && item?.orderCondition === null) ||
                 item?.nasiyaCondition === null) && (
-                <Order order={item} key={item?.orderId} />
+                <OrderShell order={item} key={item?.orderId} />
               )
             )
           )
       ) : (
-        <p style={{ textAlign: "center" }}>Loading...</p>
+        <p style={{ textAlign: "center" }}>{orders === 0 ? "No orders yet" : "Loading..."}</p>
       )}
     </div>
   );

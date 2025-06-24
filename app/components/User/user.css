@@ -26,6 +26,7 @@
   top: 1rem;
 }
 
+.support-chat-container,
 .order-history-container,
 .user-information,
 .user-dashboard-navbar {
@@ -33,6 +34,10 @@
   padding: 1rem;
   border: 3px solid var(--first-color);
   border-radius: 20px;
+}
+
+.user-information > h2{
+  text-align: center;
 }
 
 .order-history-container{
@@ -43,6 +48,7 @@
 .user-settings {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .user-settings > .product-info {
@@ -55,4 +61,29 @@
 
 .user-settings > .product-info:nth-last-child(2) {
   margin: 1.5rem 5%;
+}
+
+.info-form-btn-container{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.info-form-btn:nth-child(1){
+  background-color: var(--second-color);
+  color: black;
+}
+
+.info-form-btn{
+  width: fit-content;
+  padding: 5px 1.5rem ;
+  font-size: var(--bg-font-all);
+  color: white;
+  background-color: var(--first-color);
+  border: none;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
 }

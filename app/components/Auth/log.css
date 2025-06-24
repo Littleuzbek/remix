@@ -125,3 +125,16 @@
 .change-form > button:hover {
   background-color: var(--first-color-light);
 }
+
+.auth-loader{
+  animation: supportLoader 1.5s linear infinite;
+}
+
+@keyframes supportLoader {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
+}

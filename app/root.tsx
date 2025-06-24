@@ -8,7 +8,7 @@ import {
 import type { LinksFunction } from "@remix-run/node";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import { getProducts, isLogged } from "./firebase";
+import { getProducts } from "./utils";
 
 import AppShell from "./AppShell"
 
@@ -100,21 +100,12 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: userStyles,
-  },
-  {
-    rel: "stylesheet",
-    href: userDashboardStyles,
-  },
-  {
-    rel: "stylesheet",
     href: orderHistoryStyles,
   },
 ];
 
 export const loader = async () => {
   const products = await getProducts();
-  await isLogged()
   
   return products;
 };
