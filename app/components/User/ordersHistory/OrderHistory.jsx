@@ -1,37 +1,10 @@
 import "./orderHistory.css";
-import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
-import { auth, db } from "../../../firebase";
+import { useState } from "react";
 import OrderShell from "./OrderShell";
 
-export default function OrderHistory() {
-  const [orders, setOrders] = useState(false);
+export default function OrderHistory({orderData}) {
+  const orders = orderData || false;
   const [category, setCategory] = useState(false);
-  const user = auth?.currentUser?.uid;
-
-  useEffect(() => {
-    if (user) {
-      const getData = onSnapshot(
-        collection(db, "exko", "users", "users", user, "orders"),
-        (query) => {
-          const allOrders = [];
-
-          query?.forEach((item) => allOrders.push(item.data()));
-
-          if (allOrders?.length !== 0) {
-            setOrders(allOrders);
-            console.log(allOrders);
-          }
-
-          if(allOrders?.length === 0){
-            setOrders(0)
-          }
-        }
-      );
-
-      return () => getData();
-    }
-  }, [user]);
 
   return (
     <div className="order-history-container">

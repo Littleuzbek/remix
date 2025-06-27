@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "@remix-run/react";
+import { useEffect, useRef, useState } from "react";
+import { useFetcher, useNavigate } from "@remix-run/react";
 import { useDispatch } from "react-redux";
 import { doc, getDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -16,29 +16,29 @@ export default function Login() {
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const fetcher = useFetcher();
 
   const signInUser = async (email, password) => {
     if (email !== "" && password !== "") {
       setLoader(true);
       signInWithEmailAndPassword(auth, email, password)
         .then(async (res) => {
-          await getDoc(doc(db, "exko", "users", "users", res?.user?.uid)).then(
-            (user) => {
-              if (user?.data()) {
-                dispatch(cartAction.setUser(user?.data()));
-                dispatch(cartAction.setLogged(true));
-                navigate(`/user/main`);
-              }
-            }
-          );
+          if (res.user.uid) {
+            fetcher.submit(
+              {
+                userId: res.user.uid,
+                email: email,
+                password: password,
+              },
+              { method: "post", action: "/authentication" }
+            );
+          }
         })
-        .catch((err) => {
-          console.log(err);
-          setError("incorrect email or password!");
+        .catch(() => {
           setLoader(false);
+          setError("email or password is wrong!");
         });
     } else {
-      console.log("err");
       setLoader(false);
       setError("Please enter requirements");
     }

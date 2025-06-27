@@ -7,12 +7,17 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
 import {
+  createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
+import { redirect } from "@remix-run/react";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -29,7 +34,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const app =
+  getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 // const analytics = getAnalytics(app);
 const storage = getStorage(app);
 const db = getFirestore(app);
@@ -39,9 +45,9 @@ const auth = getAuth(app);
 
 export const getProducts = async () => {
   const products = [];
-  const snapshot = getDocs(collection(db, "exko", "data", "items"));
+  const snapshot = await getDocs(collection(db, "exko", "data", "items"));
 
-  (await snapshot).forEach((doc) => {
+  snapshot.forEach((doc) => {
     products.push(doc.data());
   });
 
@@ -59,31 +65,21 @@ export const getUserData = async (userId) => {
   return userDoc;
 };
 
-export const isLogged = async () => {
-  return await new Promise((resolve) => {
-    const unsub = onAuthStateChanged(auth, async (user) => {
-      unsub();
-      if (user) {
-        resolve(user);
-      } else {
-        resolve(null);
-      }
-    });
-  });
-};
-
-export const getUserOrders = async () => {
-  const orders = [];
-  const userId = auth?.currentUser?.uid;
-  const snapshot = getDocs(
+export const getUserOrders = async (userId) => {
+  const getOrders = await getDocs(
     collection(db, "exko", "users", "users", userId, "orders")
   );
+  const allOrders = [];
 
-  (await snapshot).forEach((doc) => {
-    orders.push(doc.data());
-  });
+  getOrders?.forEach((item) => allOrders.push(item.data()));
 
-  return orders;
+  if (allOrders?.length !== 0) {
+    return allOrders;
+  }
+
+  if (allOrders?.length === 0) {
+    return 0;
+  }
 };
 
 // ACTION FUNCTIONS
@@ -92,15 +88,64 @@ export const login = async (formData) => {
   const email = formData.get("email");
   const password = formData.get("password");
 
-  if (email.trim() === "" || password.trim() === "") {
-    return json({ error: "Please fill out the form" }, { status: 400 });
-  }
-
   try {
-    const res = await signInWithEmailAndPassword(auth, email, password);
+    const user = await signInWithEmailAndPassword(auth, email, password);
 
-    return res;
-  } catch (err) {
-    return null;
+    if (user) {
+      const userDoc = await getDoc(
+        doc(db, "exko", "users", "users", user.user.uid)
+      );
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        return {
+          success: true,
+          userData: userData,
+        };
+      }
+    } else {
+      return {
+        success: false,
+        error: "email or password is wrong!",
+      };
+    }
+  } catch (error) {
+    if (error.code === "auth/invalid-credential") {
+      return {
+        success: false,
+        error: "email or password is wrong!",
+      };
+    }
+
+    if (error.code === "auth/too-many-requests") {
+      return {
+        success: false,
+        error: "too many attempts",
+      };
+    }
+  }
+};
+
+export const signUp = async (formData) => {
+  let newUserData = formData.get("newUserData");
+  const name = formData.get("name");
+  const email = formData.get("email");
+  newUserData = JSON.parse(newUserData);
+
+  if (newUserData) {
+    await setDoc(doc(db, "exko", "users", "users", newUserData?.uid), {
+      banned: false,
+      birthDay: null,
+      email: email,
+      gender: null,
+      isAdmin: false,
+      name: name,
+      number: null,
+      surname: null,
+      createdAt: serverTimestamp(),
+    });
+
+    return redirect(`/user/${newUserData.uid}/main`);
+  } else {
+    return false;
   }
 };

@@ -1,15 +1,14 @@
 import "./user.css";
 import "./dashboard.css";
 
-import avatar1 from "../../assets/avatar/avatar1.png";
 import { Outlet, useLocation, useNavigate } from "@remix-run/react";
 import { signOut } from "firebase/auth";
+import { useDispatch } from "react-redux";
 import { cartAction } from "../../store/CartSlice";
 import { auth } from "../../firebase";
-import { useDispatch, useSelector } from "react-redux";
+import avatar1 from "../../assets/avatar/avatar1.png";
 
 export default function User() {
-  const user = useSelector(state => state.cart.user);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,7 +16,7 @@ export default function User() {
     <div className="user-page">
       <div className="username">
         <img src={avatar1} alt="" />
-        <h1>{user?.name ? user?.name : "..."}</h1>
+        <h1>{auth?.currentUser?.displayName ? auth?.currentUser?.displayName : "..."}</h1>
       </div>
 
       <div className="user-dashboard">
@@ -25,7 +24,7 @@ export default function User() {
           <span
             className="nav-item"
             onClick={() => {
-              navigate(`/user/orders`);
+              navigate(`/user/${auth?.currentUser?.uid}/orders`);
             }}
             style={
               pathname.includes("orders")
@@ -38,7 +37,7 @@ export default function User() {
           <span
             className="nav-item"
             onClick={() => {
-              navigate(`/user/main`);
+              navigate(`/user/${auth?.currentUser?.uid}/main`);
             }}
             style={
               pathname.includes("main")

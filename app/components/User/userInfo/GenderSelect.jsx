@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./gender.css"
 
 export function GenderSelection({ onChange, defaultValue = "", name = "gender", className = "" }) {
@@ -11,6 +11,12 @@ export function GenderSelection({ onChange, defaultValue = "", name = "gender", 
       onChange(value)
     }
   }
+
+  useEffect(()=>{
+    if(defaultValue === "male"){
+      setSelectedGender("male")
+    }
+  },[defaultValue])
 
   return (
     <div className={`gender-selection ${className}`}>

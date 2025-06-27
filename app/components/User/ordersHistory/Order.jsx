@@ -5,10 +5,10 @@ import Carousel from "../../Card/Carousel";
 import { PriceFormatter } from "../../extra/PriceFormatter";
 import { FaArrowDown } from "react-icons/fa6";
 import NasiyaIndicators from "./NasiyaIndicators";
+import { Form } from "@remix-run/react";
 
-export default function Order({ order, onCancel }) {
+export default function Order({ order }) {
   const [showItem, setShowItem] = useState(false);
-  const [showNasiya, setShowNasiya] = useState(false);
 
   const formatDate = (unformatted) => {
     const formattedDate = new Date(unformatted.seconds * 1000);
@@ -96,12 +96,12 @@ export default function Order({ order, onCancel }) {
           {/* Buyurtmani rad etish start */}
 
           {order?.confirmed === null && (
-            <div className="user-order-cancel-btn">
+            <Form className="user-order-cancel-btn" method="post">
               Buyurtmani bekor qilish
-              <button
-                onClick={() => onCancel(order?.nasiya ? true : false)}
-              ></button>
-            </div>
+              <input type="hidden" name="typ" value={JSON.stringify(order?.nasiya ? true : false)} />
+              <input type="hidden" name="ord" value={JSON.stringify(order)} />
+              <button type="submit"></button>
+            </Form>
           )}
           {/* Buyurtmani rad etish end */}
         </div>

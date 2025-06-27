@@ -1,22 +1,21 @@
 import { useLocation, useNavigate } from "@remix-run/react";
 import { useSelector } from "react-redux";
 import { LuUserRound } from "react-icons/lu";
+import { auth } from "../../firebase";
 
 export default function User() {
   const isLogged = useSelector((state) => state.cart.isLogged);
-  const user = useSelector((state) => state.cart.user);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const handleNavigation = () => {
-    if (user) {
-      navigate(`/user/main`);
+    if (auth.currentUser) {
+      navigate(`/user/${auth.currentUser.uid}/main`);
     }else{
       navigate("/authentication");
     }
   };
-
-
+  
   return (
     <div
       role="button"
@@ -29,7 +28,7 @@ export default function User() {
       onClick={()=>handleNavigation()}
     >
       <LuUserRound />
-      {isLogged && user?.name ? user?.name : "Kirish"}
+      {isLogged && auth.currentUser.displayName ? auth.currentUser.displayName : "Kirish"}
     </div>
   );
 }

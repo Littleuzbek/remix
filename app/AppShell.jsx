@@ -1,26 +1,34 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useLoaderData } from "@remix-run/react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 
 import { cartAction } from "./store/CartSlice";
 import { auth, db } from "./firebase";
+// import { getUserData as getUserDataa } from "./utils";
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import CartBtn from "./components/Cart/CartBtn";
 import ScrollUp from "./components/extra/ScrollUp";
 
+// export const action = async () => {
+//    const formData = await request.formData();
+//   const userId = formData.get("userid");
+//   return true
+// }
+
 export default function AppShell({ children }) {
+  const fetcher = useFetcher();
   const dispatch = useDispatch();
   const products = useLoaderData();
 
   const getUserData = (userId) => {
     const userData = onSnapshot(
       doc(db, "exko", "users", "users", userId),
-      (query) => {
-        dispatch(cartAction.setUser(query?.data()));
+      (document) => {
+        dispatch(cartAction.setUser(document?.data()));
       }
     );
 
