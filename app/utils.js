@@ -91,16 +91,14 @@ export const login = async (formData) => {
   try {
     const user = await signInWithEmailAndPassword(auth, email, password);
 
-    if (user) {
-      const userDoc = await getDoc(
-        doc(db, "exko", "users", "users", user.user.uid)
-      );
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        return {
-          success: true,
-          userData: userData,
-        };
+    if (user?.user?.uid) {
+      const userDoc = await getUserData(user.user.uid);
+      if (userDoc) {
+        return redirect(`/user/${user.user.uid}/main`);
+        // return {
+        //   success: true,
+        //   userData: userData,
+        // };
       }
     } else {
       return {
@@ -114,12 +112,15 @@ export const login = async (formData) => {
         success: false,
         error: "email or password is wrong!",
       };
-    }
-
-    if (error.code === "auth/too-many-requests") {
+    } else if (error.code === "auth/too-many-requests") {
       return {
         success: false,
         error: "too many attempts",
+      };
+    } else {
+      return {
+        success: false,
+        error: "Please try again later",
       };
     }
   }
